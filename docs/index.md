@@ -24,4 +24,4 @@ This is NOT protection ready and forking in this state **advised against doing s
 
 This repository and its contents, including those under Web-Breakout and ELedlow Studios, are protected by copyright law. Unauthorized copying, distribution, modification, or use of any part of this repository or studio is strictly prohibited without prior written permission from the copyright holder.
 
-See the [LICENSE](LICENSE.md) for more information.
+See the [LICENSE](/LICENSE.md) for more information.
