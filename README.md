@@ -25,3 +25,7 @@ This is NOT protection ready and forking in this state **advised against doing s
 This repository and its contents, including those under Web-Breakout and ELedlow Studios, are protected by copyright law. Unauthorized copying, distribution, modification, or use of any part of this repository or studio is strictly prohibited without prior written permission from the copyright holder.
 
 See the [LICENSE](LICENSE.md) for more information.
+
+------------
+THIS SITE IS NOT OPEN SOURCE.
+I'm still trying to figure out how to get GitHub to stop saying it's open source it's under All Rights Reserved.
