@@ -8,8 +8,8 @@ This is NOT protection ready and forking in this state **advised against doing s
 ------------
 
 GitHub Page:
-[GitHub.com - Breakout VHS](https://github.com/Breakout-X/VHS)
-<iframe src="https://github.com/Breakout-X/VHS" width="100%" height="500px"></iframe>
+[GitHub.com - Breakout VHS](https://breakout-x.github.io/VHS/)
+<iframe src="https://breakout-x.github.io/VHS/" width="100%" height="500px"></iframe>
 
 ------------
 
