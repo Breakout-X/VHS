@@ -28,4 +28,4 @@ See the [LICENSE](/LICENSE.md) for more information.
 
 ------------
 THIS SITE IS NOT OPEN SOURCE.
-I'm still trying to figure out how to get GitHub to stop saving it's open source it's under All Rights Reserved.
+I'm still trying to figure out how to get GitHub to stop saying it's open source it's under All Rights Reserved.
