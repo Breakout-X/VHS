@@ -2,6 +2,7 @@ Welcome!
 
 This is my "VHS Canvas" Test.
 This is me testing my JavaScript canvas abilities.
+There are some glitches I am currently trying to resolve.
 
 This is NOT protection ready and forking in this state **advised against doing so**.
 
