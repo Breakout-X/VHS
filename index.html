@@ -15,11 +15,30 @@
         canvas {
             background-color: #f0f0f0;
         }
+        #mobileControls {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+        }
+        button#startButton {
+            background-color: green;
+        }
     </style>
 </head>
 <body>
     <canvas id="gameCanvas" width="800" height="600"></canvas>
     <script type="application/javascript" src="project-api.js"></script>
     <script type="application/javascript" src="project.js"></script>
+
+    <div id="mobileControls">
+        <button id="startButton">Start Project</button>
+    </div>
 </body>
 </html>
