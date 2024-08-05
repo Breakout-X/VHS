@@ -4,16 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <!-- Favicon links -->
     <link rel="apple-touch-icon" sizes="180x180" href="favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon.ico">
     <link rel="icon" type="image/png" sizes="192x192" href="favicon.ico">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon.ico">
 
-    <title>Scratch Assets Test</title>
+    <!-- Page title -->
     <title>Advanced Sprite Example</title>
+
+    <!-- Styles -->
     <style>
+        body {
+            background-color: grey;
+        }
         canvas {
-            background-color: #f0f0f0;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            display: block;
+            margin: 0 auto;
+            width: 80vh;
+            height: 80vh;
         }
         #mobileControls {
             position: fixed;
@@ -24,21 +38,34 @@
             gap: 10px;
         }
         button {
-            padding: 10px;
+            padding: 10px 20px;
             font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
         button#startButton {
             background-color: green;
+            color: white;
+        }
+        button#startButton:hover {
+            background-color: darkgreen;
         }
     </style>
 </head>
 <body>
-    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <!-- Canvas for the game -->
+    <canvas id="gameCanvas" width="600" height="600"></canvas>
+
+    <!-- JavaScript files -->
     <script type="application/javascript" src="project-api.js"></script>
     <script type="application/javascript" src="project.js"></script>
 
+    <!-- Mobile controls -->
     <div id="mobileControls">
         <button id="startButton">Start Project</button>
     </div>
 </body>
 </html>
+
