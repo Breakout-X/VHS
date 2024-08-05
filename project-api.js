@@ -1,8 +1,8 @@
 class Sprite {
-    constructor(x = 0, y = 0, size = 100, image, fx) {
+    constructor(x = 0, y = 0, size = 100, image, fx = { color: 0, pixelation: 0, ghost: 0, spin: 0, fisheye: 0 }) {
         this.x = x;
         this.y = y;
-        this.size = size;
+        this.size = (size / 100);
         this.image = new Image();
         this.image.src = image.filepath;
         this.image.onload = () => {
@@ -36,9 +36,9 @@ class Sprite {
 
     collidesWith(sprite) {
         return this.x < sprite.x + (sprite.size / 100) * sprite.imageWidth &&
-               this.x + (this.size / 100) * this.imageWidth > sprite.x &&
+               this.x + this.size * this.imageWidth > sprite.x &&
                this.y < sprite.y + (sprite.size / 100) * sprite.imageHeight &&
-               this.y + (this.size / 100) * this.imageHeight > sprite.y;
+               this.y + this.size * this.imageHeight > sprite.y;
     }
 
     flipDirection() {
@@ -50,66 +50,77 @@ class Sprite {
     }
 
     applyEffects(ctx) {
+        ctx.save();
+        ctx.imageSmoothingEnabled = false;
+    
         if (this.fx.color) {
-            ctx.fillStyle = this.fx.color;
-            ctx.globalCompositeOperation = 'source-atop';
-            ctx.fillRect(this.x, this.y, (this.size / 100) * this.imageWidth, (this.size / 100) * this.imageHeight);
+            // Works perfectly
             ctx.globalCompositeOperation = 'source-over';
+            ctx.filter = `hue-rotate(${this.fx.color}deg)`;
         }
+    
         if (this.fx.pixelation) {
-            ctx.imageSmoothingEnabled = false;
-            ctx.drawImage(ctx.canvas, this.x, this.y, (this.size / 100) * this.imageWidth / this.fx.pixelation, (this.size / 100) * this.imageHeight / this.fx.pixelation, this.x, this.y, (this.size / 100) * this.imageWidth, (this.size / 100) * this.imageHeight);
-            ctx.imageSmoothingEnabled = true;
+            console.error("Mehod \"Pixelation\" Not Supported.")
+            this.pixelSize = Math.max(1, Math.floor(100 / this.fx.pixelation));
         }
+    
         if (this.fx.ghost) {
-            ctx.globalAlpha = this.fx.ghost;
+            // Works perfectly for every value under 101.
+            ctx.globalAlpha = 1 - (this.fx.ghost / 100);
         }
-        if (this.fx.whirl) {
-            ctx.translate(this.x + ((this.size / 100) * this.imageWidth) / 2, this.y + ((this.size / 100) * this.imageHeight) / 2);
-            ctx.rotate(this.fx.whirl * Math.PI / 180);
-            ctx.translate(-(this.x + ((this.size / 100) * this.imageWidth) / 2), -(this.y + ((this.size / 100) * this.imageHeight) / 2));
+    
+        if (this.fx.spin) {
+            // Spin the sprite image.
+            const swirlAmount = this.fx.spin / 100;
+            ctx.translate(this.x + this.imageWidth / 2, this.y + this.imageHeight / 2);
+            ctx.rotate(swirlAmount * Math.PI);
+            ctx.translate(-(this.x + this.imageWidth / 2), -(this.y + this.imageHeight / 2));
         }
+    
         if (this.fx.fisheye) {
-            ctx.filter = `url(#fisheye)`;
+            console.error("Mehod \"Fisheye\" Not Supported.")
         }
-    }
+    }    
 
     draw(ctx, deltaTime) {
         if (this.deleted) return;
 
-        const centerX = this.x + ((this.size / 100) * this.imageWidth) / 2;
-        const centerY = this.y + ((this.size / 100) * this.imageHeight) / 2;
+        const centerX = this.x + (this.size * this.imageWidth) / 2;
+        const centerY = this.y + (this.size * this.imageHeight) / 2;
 
         ctx.save();
         ctx.translate(centerX, centerY);
         ctx.rotate(this.rotation * Math.PI / 180);
         ctx.translate(-centerX, -centerY);
 
+        this.applyEffects(ctx);
+
         if (this.direction === 'left') {
             ctx.scale(-1, 1);
             if (this.animation) {
                 this.animation.update(deltaTime);
                 const currentFrame = this.animation.getCurrentFrame();
-                ctx.drawImage(currentFrame, this.imageXOffset, this.imageYOffset, currentFrame.width, currentFrame.height, -this.x - ((this.size / 100) * this.imageWidth), this.y, (this.size / 100) * this.imageWidth, (this.size / 100) * this.imageHeight);
+                ctx.drawImage(currentFrame, this.imageXOffset, this.imageYOffset, currentFrame.width, currentFrame.height, -this.x - (this.size * this.imageWidth), this.y, this.size * this.imageWidth, this.size * this.imageHeight);
             } else {
-                ctx.drawImage(this.image, this.imageXOffset, this.imageYOffset, this.image.width, this.image.height, -this.x - ((this.size / 100) * this.imageWidth), this.y, (this.size / 100) * this.imageWidth, (this.size / 100) * this.imageHeight);
+                ctx.drawImage(this.image, this.imageXOffset, this.imageYOffset, this.image.width, this.image.height, -this.x - (this.size * this.imageWidth), this.y, this.size * this.imageWidth, this.size * this.imageHeight);
             }
         } else {
             if (this.animation) {
                 this.animation.update(deltaTime);
                 const currentFrame = this.animation.getCurrentFrame();
-                ctx.drawImage(currentFrame, this.imageXOffset, this.imageYOffset, currentFrame.width, currentFrame.height, this.x, this.y, (this.size / 100) * this.imageWidth, (this.size / 100) * this.imageHeight);
+                ctx.drawImage(currentFrame, this.imageXOffset, this.imageYOffset, currentFrame.width, currentFrame.height, this.x, this.y, this.size * this.imageWidth, this.size * this.imageHeight);
             } else {
-                ctx.drawImage(this.image, this.imageXOffset, this.imageYOffset, this.image.width, this.image.height, this.x, this.y, (this.size / 100) * this.imageWidth, (this.size / 100) * this.imageHeight);
+                ctx.drawImage(this.image, this.imageXOffset, this.imageYOffset, this.image.width, this.image.height, this.x, this.y, this.size * this.imageWidth, this.size * this.imageHeight);
             }
         }
 
-        this.applyEffects(ctx);
+        //this.applyEffects(ctx);
         ctx.restore();
         ctx.globalAlpha = 1.0;
         ctx.filter = 'none';
     }
 };
+
 
 class SpriteSheet {
     constructor(image, frameWidth, frameHeight, frameCount, frameDuration) {
@@ -181,17 +192,21 @@ function preloadImages(imagePaths, callback) {
     let loadedImages = 0;
     const images = [];
 
-    imagePaths.forEach((path, index) => {
-        images[index] = new Image();
-        images[index].src = path;
-        images[index].onload = () => {
-            loadedImages++;
-            if (loadedImages === imagePaths.length) {
-                callback(images);
-            }
-        };
+    Object.values(imagePaths).forEach((paths) => {
+        paths.forEach((path) => {
+            const img = new Image();
+            img.src = path;
+            img.onload = () => {
+                loadedImages++;
+                if (loadedImages === Object.values(imagePaths).flat().length) {
+                    callback(images);
+                }
+            };
+            images.push(img);
+        });
     });
-};
+}
+
 
 function preloadSounds(soundPaths, callback) {
     let loadedSounds = 0;
