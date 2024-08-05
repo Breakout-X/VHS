@@ -23,7 +23,8 @@ const imagePaths = {
     ],
 
     Background: [
-        'Backdrop/_wall_.svg'
+        'Backdrop/_wall_.svg',
+        'Backdrop/wall_.svg'
     ],
 };
 const soundPaths = [
@@ -34,7 +35,7 @@ const soundPaths = [
 let sounds = [];
 
 preloadImages(imagePaths, (images) => {
-    const background = new Sprite(0, -200, 150, { filepath: images[13].src });
+    const background = new Sprite(0, -200, 150, { filepath: images[14].src });
     const breakout = new Sprite(75, 100, 300, { filepath: images[8].src });
     const nebula = new Sprite(275, 100, 300, { filepath: images[2].src });
 
